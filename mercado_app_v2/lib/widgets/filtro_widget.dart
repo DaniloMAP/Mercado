@@ -1,12 +1,29 @@
+// filtro_widget.dart
 import 'package:flutter/material.dart';
 
 class FiltroWidget extends StatelessWidget {
+  final Function(String) onSearchQueryChanged;
+
+  FiltroWidget({
+    required this.onSearchQueryChanged,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      // Adicione widgets de filtro aqui...
       padding: EdgeInsets.all(16.0),
-      child: Text('Widgets de Filtro'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Buscar por Nome:'),
+          TextField(
+            onChanged: onSearchQueryChanged,
+            decoration: InputDecoration(
+              hintText: 'Digite o nome do produto',
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

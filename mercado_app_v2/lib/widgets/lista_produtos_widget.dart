@@ -42,29 +42,29 @@ class ListaProdutosWidget extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(produto.nome),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 200.0,
                   child: Image.asset(
                     produto.imagem,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: double.infinity,
+                    height: 200.0,
                     fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              Text('Categoria: ${produto.categoria}'),
-              Text('Disponível: ${produto.disponivel ? 'Sim' : 'Não'}'),
-              Text('Referência: ${produto.referencia}'),
-              Text('Fornecedor: ${produto.fornecedor}'),
-              Text('Código de Barras: ${produto.codigoBarras}'),
-              Text('Quantidade: ${produto.quantidade}'),
-              // Adicione mais informações do produto se necessário...
-            ],
+                Text('Categoria: ${produto.categoria}'),
+                Text('Disponível: ${produto.disponivel ? 'Sim' : 'Não'}'),
+                Text('Referência: ${produto.referencia}'),
+                Text('Fornecedor: ${produto.fornecedor}'),
+                Text('Código de Barras: ${produto.codigoBarras}'),
+                Text('Quantidade: ${produto.quantidade}'),
+                // Adicione mais informações do produto se necessário...
+              ],
+            ),
           ),
           actions: [
             TextButton(
