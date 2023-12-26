@@ -1,8 +1,8 @@
 // screens/home_screen.dart
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Adicionado para o rootBundle
 import '../models/produto.dart';
 import '../widgets/lista_produtos_widget.dart';
 
@@ -13,15 +13,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String queryDeBusca = '';
-  Timer? _debounce;
+  TextEditingController _searchController = TextEditingController();
+  late List<Produto> _produtos;
+  late List<Produto> _produtosFiltrados;
 
-  Future<List<Produto>> _carregarProdutos(BuildContext context) async {
-    String data =
-        await DefaultAssetBundle.of(context).loadString('assets/produtos.json');
+  @override
+  void initState() {
+    super.initState();
+    _carregarProdutos();
+    _searchController.addListener(_filtrarProdutos);
+  }
+
+  Future<void> _carregarProdutos() async {
+    String data = await rootBundle.loadString('assets/produtos.json');
     List<dynamic> produtosJson = json.decode(data);
-    List<Produto> produtos =
-        produtosJson.map((json) => Produto.fromJson(json)).toList();
-    return produtos;
+    _produtos = produtosJson.map((json) => Produto.fromJson(json)).toList();
+    _filtrarProdutos();
+  }
+
+  void _filtrarProdutos() {
+    setState(() {
+      queryDeBusca = _searchController.text.toLowerCase();
+      _produtosFiltrados = _produtos
+          .where((produto) => produto.nome.toLowerCase().contains(queryDeBusca))
+          .toList();
+    });
   }
 
   @override
@@ -30,58 +46,23 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Mini Mercado Apepê'),
       ),
-      body: FutureBuilder<List<Produto>>(
-        future: _carregarProdutos(context),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text('Erro ao carregar os produtos'),
-              );
-            }
-            List<Produto> produtosFiltrados =
-                (snapshot.data ?? []).where((produto) {
-              bool buscaPassaFiltro = queryDeBusca.isEmpty ||
-                  produto.nome
-                      .toLowerCase()
-                      .contains(queryDeBusca.toLowerCase());
-
-              return buscaPassaFiltro;
-            }).toList();
-
-            return Column(
-              children: [
-                TextField(
-                  onChanged: (String searchQuery) {
-                    if (_debounce != null) {
-                      _debounce!.cancel();
-                    }
-
-                    _debounce = Timer(const Duration(milliseconds: 2000), () {
-                      setState(() {
-                        queryDeBusca = searchQuery;
-                      });
-                    });
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Digite o nome do produto',
-                  ),
-                ),
-                ListaProdutosWidget(produtos: produtosFiltrados),
-              ],
-            );
-          } else {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text('Carregando...'),
-              ),
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        },
+      body: Column(
+        children: [
+          TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Digite o nome do produto',
+            ),
+          ),
+          ListaProdutosWidget(produtos: _produtosFiltrados),
+        ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }
