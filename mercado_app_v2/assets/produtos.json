@@ -1,0 +1,25 @@
+[
+    {
+      "id": 1,
+      "nome": "Produto 1",
+      "categoria": "Categoria A",
+      "disponivel": 1,
+      "referencia": "REF001",
+      "fornecedor": "Fornecedor A",
+      "codigoBarras": "123456789",
+      "quantidade": 10,
+      "imagem": "assets/images/1.jpg"
+    },
+    {
+      "id": 2,
+      "nome": "Produto 2",
+      "categoria": "Categoria B",
+      "disponivel": 0,
+      "referencia": "REF002",
+      "fornecedor": "Fornecedor B",
+      "codigoBarras": "987654321",
+      "quantidade": 5,
+      "imagem": "assets/images/2.jpg"
+    }
+  ]
+  
