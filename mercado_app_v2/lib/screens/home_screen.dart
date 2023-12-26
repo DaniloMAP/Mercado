@@ -2,9 +2,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Adicionado para o rootBundle
+import 'package:flutter/services.dart';
 import '../models/produto.dart';
 import '../widgets/lista_produtos_widget.dart';
+import '../widgets/filtro_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String queryDeBusca = '';
+  String selectedCategory = '';
   TextEditingController _searchController = TextEditingController();
   late List<Produto> _produtos;
   late List<Produto> _produtosFiltrados;
@@ -21,22 +23,33 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _carregarProdutos();
-    _searchController.addListener(_filtrarProdutos);
+    _searchController
+        .addListener(() => _filtrarProdutos(_searchController.text));
   }
 
   Future<void> _carregarProdutos() async {
     String data = await rootBundle.loadString('assets/produtos.json');
     List<dynamic> produtosJson = json.decode(data);
     _produtos = produtosJson.map((json) => Produto.fromJson(json)).toList();
-    _filtrarProdutos();
+    _filtrarProdutos('');
   }
 
-  void _filtrarProdutos() {
+  void _filtrarProdutos(String? query) {
     setState(() {
-      queryDeBusca = _searchController.text.toLowerCase();
+      queryDeBusca = query?.toLowerCase() ?? '';
       _produtosFiltrados = _produtos
-          .where((produto) => produto.nome.toLowerCase().contains(queryDeBusca))
+          .where((produto) =>
+              produto.nome.toLowerCase().contains(queryDeBusca) &&
+              (selectedCategory.isEmpty ||
+                  produto.categoria.toLowerCase() == selectedCategory))
           .toList();
+    });
+  }
+
+  void _atualizarCategoria(String novaCategoria) {
+    setState(() {
+      selectedCategory = novaCategoria.toLowerCase();
+      _filtrarProdutos(_searchController.text);
     });
   }
 
@@ -48,11 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: 'Digite o nome do produto',
-            ),
+          FiltroWidget(
+            onSearchQueryChanged: _filtrarProdutos,
+            onCategoryFilterChanged: _atualizarCategoria,
           ),
           ListaProdutosWidget(produtos: _produtosFiltrados),
         ],
