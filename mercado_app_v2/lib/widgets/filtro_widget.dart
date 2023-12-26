@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class FiltroWidget extends StatelessWidget {
   final Function(String?) onSearchQueryChanged;
-  final Function(String) onCategoryFilterChanged;
+  final Function(String?) onCategoryFilterChanged;
 
   FiltroWidget({
     required this.onSearchQueryChanged,
@@ -27,9 +27,10 @@ class FiltroWidget extends StatelessWidget {
           SizedBox(height: 16.0),
           Text('Filtrar por Categoria:'),
           DropdownButton<String>(
-            onChanged: (category) => onCategoryFilterChanged(category!),
+            onChanged: onCategoryFilterChanged,
             hint: Text('Selecione uma categoria'),
             items: [
+              'Todos',
               'Iogurtes',
               'Bebidas',
               'Snacks',

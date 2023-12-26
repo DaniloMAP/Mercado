@@ -41,14 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
           .where((produto) =>
               produto.nome.toLowerCase().contains(queryDeBusca) &&
               (selectedCategory.isEmpty ||
+                  selectedCategory == 'todos' ||
                   produto.categoria.toLowerCase() == selectedCategory))
           .toList();
     });
   }
 
-  void _atualizarCategoria(String novaCategoria) {
+  void _atualizarCategoria(String? novaCategoria) {
     setState(() {
-      selectedCategory = novaCategoria.toLowerCase();
+      selectedCategory = novaCategoria?.toLowerCase() ?? '';
       _filtrarProdutos(_searchController.text);
     });
   }
