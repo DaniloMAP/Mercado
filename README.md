@@ -7,8 +7,9 @@ Bem-vindo ao projeto Mini Mercado Apepê! Este é um aplicativo Flutter que simu
 O projeto está organizado da seguinte maneira:
 
 - **mercado_app_v2**: Diretório principal do projeto.
-  - **assets**: Armazena ativos estáticos, como imagens.
+  - **assets**: Armazena ativos estáticos, como imagens e dados.
     - **images**: Diretório de imagens.
+    - **produtos.json**: Arquivo JSON contendo os dados dos produtos.
   - **lib**: Contém o código-fonte principal do aplicativo.
     - **models**: Armazena a definição da classe `Produto` que representa um produto no aplicativo.
       - **produto.dart**: Contém a definição da classe `Produto`.
@@ -29,6 +30,10 @@ O projeto está organizado da seguinte maneira:
 - **filtro_widget.dart**: Oferece um widget reutilizável para filtrar produtos por nome e categoria.
 
 - **lista_produtos_widget.dart**: Implementa um widget para exibir a lista de produtos. Cada item é clicável, permitindo a visualização de detalhes.
+
+## Dados de Produtos (produtos.json)
+
+Os dados dos produtos são fornecidos por meio do arquivo `produtos.json`, localizado na pasta `assets` do projeto. Este arquivo contém um array de objetos, cada um representando um produto no formato JSON. Os atributos incluem `id`, `nome`, `categoria`, `disponivel`, `referencia`, `fornecedor`, `codigoBarras`, `quantidade` e `imagem`.
 
 ## Fluxo de Funcionamento
 
