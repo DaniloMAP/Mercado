@@ -51,8 +51,8 @@ Certifique-se de ter o Flutter instalado em seu ambiente de desenvolvimento. Sig
 
 2. **Clone o Repositório:**
    ```bash
-   git clone https://seu-repositorio/mini_mercado_apepe.git
-   cd mini_mercado_apepe
+   git clone https://seu-repositorio/mercado_app_v2.git
+   cd mercado_app_v2
    ```
 
 3. **Execute o Projeto:**
