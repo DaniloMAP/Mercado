@@ -20,11 +20,15 @@ class ListaProdutosWidget extends StatelessWidget {
             },
             child: Card(
               child: ListTile(
-                leading: Image.asset(
-                  produtos[index].imagem,
+                leading: SizedBox(
                   width: 50.0,
                   height: 50.0,
-                  fit: BoxFit.cover,
+                  child: Image.asset(
+                    produtos[index].imagem,
+                    width: 50.0,
+                    height: 50.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 title: Text(produtos[index].nome),
                 subtitle: Text(produtos[index].categoria),
@@ -42,8 +46,11 @@ class ListaProdutosWidget extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(produto.nome),
-          content: SingleChildScrollView(
+          content: Container(
+            width: double.infinity,
             child: Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Centralizando o conteúdo
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -51,18 +58,16 @@ class ListaProdutosWidget extends StatelessWidget {
                   height: 200.0,
                   child: Image.asset(
                     produto.imagem,
-                    width: double.infinity,
-                    height: 200.0,
                     fit: BoxFit.cover,
                   ),
                 ),
+                SizedBox(height: 10.0),
                 Text('Categoria: ${produto.categoria}'),
                 Text('Disponível: ${produto.disponivel ? 'Sim' : 'Não'}'),
                 Text('Referência: ${produto.referencia}'),
                 Text('Fornecedor: ${produto.fornecedor}'),
                 Text('Código de Barras: ${produto.codigoBarras}'),
                 Text('Quantidade: ${produto.quantidade}'),
-                // Adicione mais informações do produto se necessário...
               ],
             ),
           ),
