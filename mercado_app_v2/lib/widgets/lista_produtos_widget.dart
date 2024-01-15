@@ -1,4 +1,3 @@
-// widgets/lista_produtos_widget.dart
 import 'package:flutter/material.dart';
 import '../models/produto.dart';
 
@@ -50,7 +49,7 @@ class ListaProdutosWidget extends StatelessWidget {
             width: double.infinity,
             child: Column(
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Centralizando o conteúdo
+                  MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(

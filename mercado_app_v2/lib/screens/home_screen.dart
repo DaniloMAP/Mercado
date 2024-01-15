@@ -1,4 +1,3 @@
-// screens/home_screen.dart
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -58,7 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mini Mercado Apepê'),
+        title: Text(
+          'Mini Mercado Apepê',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.yellow,
       ),
       body: Column(
         children: [
